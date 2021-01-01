@@ -1,27 +1,27 @@
 PODS:
-  - Reusable (4.1.0):
-    - Reusable/Storyboard (= 4.1.0)
-    - Reusable/View (= 4.1.0)
-  - Reusable/Storyboard (4.1.0)
-  - Reusable/View (4.1.0)
-  - RxCocoa (5.0.1):
+  - Reusable (4.1.1):
+    - Reusable/Storyboard (= 4.1.1)
+    - Reusable/View (= 4.1.1)
+  - Reusable/Storyboard (4.1.1)
+  - Reusable/View (4.1.1)
+  - RxCocoa (5.1.1):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
-  - RxFlow (2.7.0):
-    - RxCocoa (>= 5.0.0)
-    - RxSwift (>= 5.0.0)
-  - RxRelay (5.0.1):
+  - RxFlow (2.11.0):
+    - RxCocoa (>= 5.1.1)
+    - RxSwift (>= 5.1.1)
+  - RxRelay (5.1.1):
     - RxSwift (~> 5)
-  - RxSwift (5.0.1)
+  - RxSwift (5.1.1)
 
 DEPENDENCIES:
-  - Reusable (~> 4.1.0)
-  - RxCocoa (~> 5.0)
-  - RxFlow (~> 2.7.0)
-  - RxSwift (~> 5.0)
+  - Reusable
+  - RxCocoa
+  - RxFlow
+  - RxSwift
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Reusable
     - RxCocoa
     - RxFlow
@@ -29,12 +29,12 @@ SPEC REPOS:
     - RxSwift
 
 SPEC CHECKSUMS:
-  Reusable: 82be188f29d96dc5eff0db7b2393bcc08d2cdd5b
-  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
-  RxFlow: 605ef6364d7e937bea8f9507a1e99a431cdc2493
-  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
-  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxFlow: c5242626a73a03d0a0163f0ab795538c467b791f
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 3c803f0edbb70d589b5a4b06e5a334a55e8fe74c
+PODFILE CHECKSUM: 69655e3785941705070114f4fa5dccbffa33231c
 
-COCOAPODS: 1.7.4
+COCOAPODS: 1.9.3
