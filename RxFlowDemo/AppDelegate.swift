@@ -12,15 +12,16 @@ import RxSwift
 import RxCocoa
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
   
   let disposeBag = DisposeBag()
   var window: UIWindow?
   var coordinator = FlowCoordinator()
   let moviesService = MoviesService()
   let preferencesService = PreferencesService()
+  let castsService = CastsService()
   lazy var appServices = {
-    return AppServices(moviesService: self.moviesService, preferencesService: self.preferencesService)
+    return AppServices(moviesService: self.moviesService, preferencesService: self.preferencesService, castsService: self.castsService)
   }()
   
   func application(_ application: UIApplication,
@@ -38,19 +39,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let appFlow = AppFlow(services: self.appServices)
     
-    Flows.whenReady(flow1: appFlow) { root in
+    self.coordinator.coordinate(flow: appFlow, with: AppStepper(withServices: self.appServices))
+    
+    Flows.use(appFlow, when: .created) { root in
       window.rootViewController = root
       window.makeKeyAndVisible()
     }
     
-    self.coordinator.coordinate(flow: appFlow, with: AppStepper(withServices: self.appServices))
+    UNUserNotificationCenter.current().delegate = self
     
     return true
   }
   
+  func userNotificationCenter(_ center: UNUserNotificationCenter,
+                              willPresent notification: UNNotification,
+                              withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    completionHandler(UNNotificationPresentationOptions.init(arrayLiteral: [.alert, .badge]))
+  }
+  
+  func userNotificationCenter(_ center: UNUserNotificationCenter,
+                              didReceive response: UNNotificationResponse,
+                              withCompletionHandler completionHandler: @escaping () -> Void) {
+    // example of how DeepLink can be handled
+    self.coordinator.navigate(to: DemoStep.movieIsPicked(withId: 23452))
+  }
 }
 
-struct AppServices: HasMoviesService, HasPreferencesService {
+struct AppServices: HasMoviesService, HasPreferencesService, HasCastsService {
   let moviesService: MoviesService
   let preferencesService: PreferencesService
+  let castsService: CastsService
 }

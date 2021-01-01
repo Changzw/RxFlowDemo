@@ -7,8 +7,8 @@
 //
 
 struct Cast {
-  let id: Int
-  let name: String
-  let bio: String
-  let image: String
+    let id: Int
+    let name: String
+    let bio: String
+    let image: String
 }

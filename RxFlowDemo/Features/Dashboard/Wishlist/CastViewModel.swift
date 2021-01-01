@@ -7,8 +7,8 @@
 //
 
 struct CastViewModel: ViewModel {
-  
-  let id: Int
-  let name: String
-  let image: String
+
+    let id: Int
+    let name: String
+    let image: String
 }

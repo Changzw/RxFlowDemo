@@ -1,28 +1,26 @@
 //
-//  WishlistFlow.swift
+//  TrendingMovieFlow.swift
 //  RxFlowDemo
 //
-//  Created by Thibault Wittemberg on 17-09-05.
-//  Copyright (c) RxSwiftCommunity. All rights reserved.
+//  Created by Li Hao Lai on 29/9/20.
+//  Copyright © 2020 RxSwiftCommunity. All rights reserved.
 //
 
 import RxFlow
 import UIKit
 
-class WatchedFlow: Flow {
+class TrendingMovieFlow: Flow {
     var root: Presentable {
         return self.rootViewController
     }
 
-    private let rootViewController = UINavigationController()
+    private let rootViewController: WatchedViewController
     private let services: AppServices
 
     init(withServices services: AppServices) {
         self.services = services
-    }
-
-    deinit {
-        print("\(type(of: self)): \(#function)")
+        rootViewController = WatchedViewController.instantiate(withViewModel: WatchedViewModel(),
+                                                               andServices: self.services)
     }
 
     func navigate(to step: Step) -> FlowContributors {
@@ -30,7 +28,6 @@ class WatchedFlow: Flow {
         guard let step = step as? DemoStep else { return .none }
 
         switch step {
-
         case .moviesAreRequired:
             return navigateToMovieListScreen()
         case .movieIsPicked(let movieId):
@@ -43,19 +40,14 @@ class WatchedFlow: Flow {
     }
 
     private func navigateToMovieListScreen() -> FlowContributors {
-        let viewController = WatchedViewController.instantiate(withViewModel: WatchedViewModel(),
-                                                               andServices: self.services)
-        viewController.title = "Watched"
-
-        self.rootViewController.pushViewController(viewController, animated: true)
-        return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
+        return .one(flowContributor: .contribute(withNextPresentable: rootViewController, withNextStepper: rootViewController.viewModel))
     }
 
     private func navigateToMovieDetailScreen (with movieId: Int) -> FlowContributors {
         let viewController = MovieDetailViewController.instantiate(withViewModel: MovieDetailViewModel(withMovieId: movieId),
                                                                    andServices: self.services)
         viewController.title = viewController.viewModel.title
-        self.rootViewController.pushViewController(viewController, animated: true)
+        self.rootViewController.navigationController?.pushViewController(viewController, animated: true)
         return .one(flowContributor: .contribute(withNextPresentable: viewController, withNextStepper: viewController.viewModel))
     }
 
@@ -63,7 +55,7 @@ class WatchedFlow: Flow {
         let viewController = CastDetailViewController.instantiate(withViewModel: CastDetailViewModel(withCastId: castId),
                                                                   andServices: self.services)
         viewController.title = viewController.viewModel.name
-        self.rootViewController.pushViewController(viewController, animated: true)
+        self.rootViewController.navigationController?.pushViewController(viewController, animated: true)
         return .none
     }
 }
